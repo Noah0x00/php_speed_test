@@ -1,0 +1,17 @@
+version: '3'
+services:
+    nginx:
+        build:
+            context: ../nginx
+        depends_on:
+            - php
+        ports:
+            - 80:80
+        volumes:
+            - ../../src:/src
+
+    php:
+        build:
+            context: ./php
+        volumes:
+            - ../../src:/src
