@@ -1,0 +1,30 @@
+version: '3'
+services:
+    nginx:
+        image: nginx:latest
+        container_name: speed_test01_nginx
+        depends_on:
+            - phpv743
+            - phpv7212
+        ports:
+            - 8080:8080
+            - 8081:8081
+        volumes:
+            - ../src:/src:cached
+            - ./phpv7.2.12/nginx.conf:/etc/nginx/conf.d/nginx_phpv7212.conf:cached
+            - ./phpv7.4.3/nginx.conf:/etc/nginx/conf.d/nginx_phpv743.conf:cached
+
+    phpv7212:
+        build:
+            context: ./phpv7.2.12
+        container_name: speed_test01_phpv7212
+        volumes:
+            - ../src:/src:cached
+
+    phpv743:
+        build:
+            context: ./phpv7.4.3
+        container_name: speed_test01_phpv743
+        volumes:
+            - ../src:/src:cached
+            - ./phpv7.4.3/php.ini:/usr/local/etc/php/php.ini
