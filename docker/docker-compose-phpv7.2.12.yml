@@ -1,0 +1,22 @@
+version: '3'
+services:
+    web:
+        image: nginx:latest
+        container_name: nginx
+        depends_on:
+            - app
+        ports:
+            - 8080:8080
+        volumes:
+            - ../src:/src:cached
+            - ./nginx/default.conf:/etc/nginx/default.conf:cached
+            - ./nginx/app.conf:/etc/nginx/conf.d/app.conf:cached
+
+    app:
+        build:
+            context: ./phpv7.2.12
+        image: phpv7212
+        container_name: php
+        volumes:
+            - ../src:/src:cached
+            - ./phpv7.2.12/php.ini:/usr/local/etc/php/php.ini:cached
